@@ -39,13 +39,13 @@
   "dependencies": {
     "fastify-plugin": "^3.0.0",
     "fastify-static": "^3.3.0",
-    "js-yaml": "^3.14.0",
+    "js-yaml": "^3.14.1",
     "swagger-ui-dist": "^3.38.0"
   },
   "devDependencies": {
     "@cowtech/eslint-config": "^7.10.1",
     "@types/js-yaml": "^3.12.5",
-    "@types/node": "^14.14.17",
+    "@types/node": "^14.14.19",
     "@types/tap": "^14.10.1",
     "fastify": "^3.9.2",
     "prettier": "^2.2.1",
