@@ -8,7 +8,6 @@ import { getAbsoluteFSPath } from 'swagger-ui-dist'
 
 export function addUI(instance: FastifyInstance, prefix: string): void {
   // Get the main index file and patch it
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const swaggerUIRoot = getAbsoluteFSPath()
   const swaggerUIRootIndex = readFileSync(resolve(swaggerUIRoot, 'index.html'), 'utf8').replace(
     /url: "(.*)"/,
