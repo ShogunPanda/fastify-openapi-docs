@@ -11,7 +11,6 @@ const path_1 = require("path");
 const swagger_ui_dist_1 = require("swagger-ui-dist");
 function addUI(instance, prefix) {
     // Get the main index file and patch it
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const swaggerUIRoot = swagger_ui_dist_1.getAbsoluteFSPath();
     const swaggerUIRootIndex = fs_1.readFileSync(path_1.resolve(swaggerUIRoot, 'index.html'), 'utf8').replace(/url: "(.*)"/, `url: "${prefix}/openapi.json"`);
     // Add the Swagger UI
