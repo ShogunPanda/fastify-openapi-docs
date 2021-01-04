@@ -8,7 +8,7 @@ import {
   RouteOptions
 } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
-import { dump } from 'js-yaml'
+import yaml from 'js-yaml'
 import { buildSpec, Schema } from './spec'
 import { addUI } from './ui'
 
@@ -32,7 +32,7 @@ export const plugin = fastifyPlugin(
       url: `${prefix}/openapi.yaml`,
       handler(_: FastifyRequest, reply: FastifyReply): void {
         reply.type('text/yaml')
-        reply.send(dump(spec))
+        reply.send(yaml.dump(spec))
       },
       config: { hide: false }
     })
@@ -63,5 +63,10 @@ export const plugin = fastifyPlugin(
 )
 
 export default plugin
-module.exports = plugin
-Object.assign(module.exports, exports)
+
+// Fix CommonJS exporting
+/* istanbul ignore else */
+if (typeof module !== 'undefined') {
+  module.exports = plugin
+  Object.assign(module.exports, exports)
+}

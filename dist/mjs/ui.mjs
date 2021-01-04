@@ -1,18 +1,13 @@
-"use strict";
 /* eslint-disable @typescript-eslint/no-floating-promises */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.addUI = void 0;
-const fastify_static_1 = __importDefault(require("fastify-static"));
-const fs_1 = require("fs");
-const path_1 = require("path");
-function addUI(instance, prefix) {
+import fastifyStatic from 'fastify-static';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import { getAbsoluteFSPath } from 'swagger-ui-dist';
+export function addUI(instance, prefix) {
     // Get the main index file and patch it
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const swaggerUIRoot = require('swagger-ui-dist').getAbsoluteFSPath();
-    const swaggerUIRootIndex = fs_1.readFileSync(path_1.resolve(swaggerUIRoot, 'index.html'), 'utf8').replace(/url: "(.*)"/, `url: "${prefix}/openapi.json"`);
+    const swaggerUIRoot = getAbsoluteFSPath();
+    const swaggerUIRootIndex = readFileSync(resolve(swaggerUIRoot, 'index.html'), 'utf8').replace(/url: "(.*)"/, `url: "${prefix}/openapi.json"`);
     // Add the Swagger UI
     instance.route({
         method: 'GET',
@@ -21,7 +16,7 @@ function addUI(instance, prefix) {
             reply.redirect(301, `${prefix}/`);
         }
     });
-    instance.register(fastify_static_1.default, {
+    instance.register(fastifyStatic, {
         root: swaggerUIRoot,
         prefix,
         schemaHide: true
@@ -37,4 +32,3 @@ function addUI(instance, prefix) {
         done();
     });
 }
-exports.addUI = addUI;

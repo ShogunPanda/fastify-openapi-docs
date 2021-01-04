@@ -17,13 +17,17 @@
   "license": "ISC",
   "private": false,
   "files": [
-    "lib",
+    "dist",
     "types",
     "CHANGELOG.md",
     "LICENSE.md",
     "README.md"
   ],
-  "main": "lib/index.js",
+  "main": "dist/cjs/index.js",
+  "exports": {
+    "require": "./dist/cjs/index.js",
+    "import": "./dist/mjs/index.mjs"
+  },
   "typings": "types/index.d.ts",
   "types": "types/index.d.ts",
   "scripts": {
@@ -31,8 +35,8 @@
     "test": "tap --reporter=spec --coverage-report=html --coverage-report=text --no-browser test/*.test.ts",
     "test:ci": "tap --no-color --reporter=spec --coverage-report=json --coverage-report=text --branches 90 --functions 90 --lines 90 --statements 90 test/*.test.ts",
     "ci": "yarn lint && yarn test:ci",
-    "prebuild": "rm -rf lib/* types/* && yarn lint",
-    "build": "tsc -p .",
+    "prebuild": "rm -rf dist types && yarn lint",
+    "build": "tsc -p . && tsc -p tsconfig.modules.json && renamer --find js --replace mjs dist/mjs/** >> /dev/null && jscodeshift -s --extensions=mjs -t node_modules/@cowtech/esm-package-utils dist/mjs/**",
     "prepublishOnly": "yarn ci",
     "postpublish": "git push origin && git push origin -f --tags"
   },
@@ -44,8 +48,10 @@
   },
   "devDependencies": {
     "@cowtech/eslint-config": "^7.14.0",
+    "@cowtech/esm-package-utils": "^0.2.0",
     "@types/js-yaml": "^3.12.5",
     "@types/node": "^14.14.19",
+    "@types/swagger-ui-dist": "^3.30.0",
     "@types/tap": "^14.10.1",
     "fastify": "^3.9.2",
     "prettier": "^2.2.1",
