@@ -18,7 +18,8 @@ export function addUI(instance, prefix) {
     instance.register(fastifyStatic, {
         root: swaggerUIRoot,
         prefix,
-        schemaHide: true
+        schemaHide: true,
+        decorateReply: false
     });
     // This hook is required because we have to serve the patched index file in order to point to the local documentation
     // eslint-disable-next-line no-useless-escape
