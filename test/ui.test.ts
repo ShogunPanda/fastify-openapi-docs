@@ -57,5 +57,32 @@ t.test('UI serving', (t: Test) => {
     t.equal(defaultBody, indexBody)
   })
 
+  t.test('should allow multiple instances', async (t: Test) => {
+    const server = fastify()
+
+    server.register(fastifyOpenApiDocs, { prefix: 'v1' })
+    server.register(fastifyOpenApiDocs, { prefix: 'v2' })
+
+    const { statusCode: redirectStatus, body: redirectBody } = await server.inject('/v1')
+    const { body: defaultBody } = await server.inject('/v1/')
+    const { body: indexBody } = await server.inject('/v1/index.html')
+
+    const { statusCode: redirectStatusv2, body: redirectBodyv2 } = await server.inject('/v2')
+    const { body: defaultBodyv2 } = await server.inject('/v2/')
+    const { body: indexBodyv2 } = await server.inject('/v2/index.html')
+
+    t.equal(redirectStatus, 301)
+    t.equal(redirectBody, '')
+    t.true(defaultBody.indexOf('url: "/v1/openapi.json",') > 0)
+    t.true(indexBody.indexOf('url: "/v1/openapi.json",') > 0)
+    t.equal(defaultBody, indexBody)
+
+    t.equal(redirectStatusv2, 301)
+    t.equal(redirectBodyv2, '')
+    t.true(defaultBodyv2.indexOf('url: "/v2/openapi.json",') > 0)
+    t.true(indexBodyv2.indexOf('url: "/v2/openapi.json",') > 0)
+    t.equal(defaultBodyv2, indexBodyv2)
+  })
+
   t.end()
 })
