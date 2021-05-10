@@ -1,6 +1,6 @@
 {
   "name": "fastify-openapi-docs",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A simple plugin for Fastify that generates OpenAPI spec automatically.",
   "homepage": "https://sw.cowtech.it/fastify-openapi-docs",
   "repository": "github:ShogunPanda/fastify-openapi-docs",
