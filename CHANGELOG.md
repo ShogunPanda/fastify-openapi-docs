@@ -1,3 +1,9 @@
+### 2021-08-16 / 1.0.0-beta.0
+
+- chore: Removed deprecations.
+- feat: Only export as ESM.
+- chore: Added missing test.
+
 ### 2021-05-10 / 0.4.0
 
 - feat: Do not decorate reply. Closes #2.
