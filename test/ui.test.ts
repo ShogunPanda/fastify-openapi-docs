@@ -19,8 +19,8 @@ t.test('UI serving', (t: Test) => {
 
     t.equal(redirectStatus, 301)
     t.equal(redirectBody, '')
-    t.true(defaultBody.indexOf('url: "/docs/openapi.json",') > 0)
-    t.true(indexBody.indexOf('url: "/docs/openapi.json",') > 0)
+    t.ok(defaultBody.indexOf('url: "/docs/openapi.json",') > 0)
+    t.ok(indexBody.indexOf('url: "/docs/openapi.json",') > 0)
     t.equal(defaultBody, indexBody)
   })
 
@@ -52,8 +52,8 @@ t.test('UI serving', (t: Test) => {
 
     t.equal(redirectStatus, 301)
     t.equal(redirectBody, '')
-    t.true(defaultBody.indexOf('url: "/another/openapi.json",') > 0)
-    t.true(indexBody.indexOf('url: "/another/openapi.json",') > 0)
+    t.ok(defaultBody.indexOf('url: "/another/openapi.json",') > 0)
+    t.ok(indexBody.indexOf('url: "/another/openapi.json",') > 0)
     t.equal(defaultBody, indexBody)
   })
 
@@ -73,14 +73,14 @@ t.test('UI serving', (t: Test) => {
 
     t.equal(redirectStatus, 301)
     t.equal(redirectBody, '')
-    t.true(defaultBody.indexOf('url: "/v1/openapi.json",') > 0)
-    t.true(indexBody.indexOf('url: "/v1/openapi.json",') > 0)
+    t.ok(defaultBody.indexOf('url: "/v1/openapi.json",') > 0)
+    t.ok(indexBody.indexOf('url: "/v1/openapi.json",') > 0)
     t.equal(defaultBody, indexBody)
 
     t.equal(redirectStatusv2, 301)
     t.equal(redirectBodyv2, '')
-    t.true(defaultBodyv2.indexOf('url: "/v2/openapi.json",') > 0)
-    t.true(indexBodyv2.indexOf('url: "/v2/openapi.json",') > 0)
+    t.ok(defaultBodyv2.indexOf('url: "/v2/openapi.json",') > 0)
+    t.ok(indexBodyv2.indexOf('url: "/v2/openapi.json",') > 0)
     t.equal(defaultBodyv2, indexBodyv2)
   })
 
