@@ -40,9 +40,12 @@ If the UI is enabled, it will be reachable at `/${prefix}`.
 ## Example
 
 ```js
-const server = require('fastify')()
+import fastify from 'fastify'
+import fastifyOpenapiDocs from 'fastify-openapi-docs'
 
-server.register(require('fastify-openapi-docs'), {
+const server = fastify()
+
+server.register(fastifyOpenapiDocs, {
   openapi: {
     // All these fields are optional, but they should be provided to satisfy OpenAPI specification.
     openapi: '3.0.3',

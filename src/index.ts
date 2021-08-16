@@ -63,10 +63,3 @@ export const plugin = fastifyPlugin(
 )
 
 export default plugin
-
-// Fix CommonJS exporting
-/* istanbul ignore else */
-if (typeof module !== 'undefined') {
-  module.exports = plugin
-  Object.assign(module.exports, exports)
-}

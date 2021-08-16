@@ -109,16 +109,16 @@ info:
   description: Description
   contact:
     name: Shogun
-    url: 'https://cowtech.it'
+    url: https://cowtech.it
     email: shogun@cowtech.it
   license:
     name: ISC
-    url: 'https://choosealicense.com/licenses/isc/'
+    url: https://choosealicense.com/licenses/isc/
   version: 1.0.0
 servers:
-  - url: 'https://example.com'
+  - url: https://example.com
     description: Production Server
-  - url: 'https://dev.example.com'
+  - url: https://dev.example.com
     description: Development Server
 tags:
   - name: service
