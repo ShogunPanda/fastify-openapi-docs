@@ -1,3 +1,6 @@
+### 2021-08-16 / 1.0.0
+
+
 ### 2021-08-16 / 1.0.0-beta.0
 
 - chore: Removed deprecations.
