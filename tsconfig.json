@@ -16,6 +16,5 @@
     "noUnusedParameters": true,
     "strictNullChecks": true
   },
-  "include": ["src/*.ts"],
-  "exclude": []
+  "include": ["src/*.ts"]
 }
