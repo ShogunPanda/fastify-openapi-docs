@@ -1,9 +1,9 @@
 # fastify-openapi-docs
 
-[![Package Version](https://img.shields.io/npm/v/fastify-openapi-docs.svg)](https://npm.im/fastify-openapi-docs)
-[![Dependency Status](https://img.shields.io/david/ShogunPanda/fastify-openapi-docs)](https://david-dm.org/ShogunPanda/fastify-openapi-docs)
+[![Version](https://img.shields.io/npm/v/fastify-openapi-docs.svg)](https://npm.im/fastify-openapi-docs)
+[![Dependencies](https://img.shields.io/librariesio/release/npm/fastify-openapi-docs)](https://libraries.io/npm/fastify-openapi-docs)
 [![Build](https://github.com/ShogunPanda/fastify-openapi-docs/workflows/CI/badge.svg)](https://github.com/ShogunPanda/fastify-openapi-docs/actions?query=workflow%3ACI)
-[![Code Coverage](https://img.shields.io/codecov/c/gh/ShogunPanda/fastify-openapi-docs?token=RUV24SG0GL)](https://codecov.io/gh/ShogunPanda/fastify-openapi-docs)
+[![Coverage](https://img.shields.io/codecov/c/gh/ShogunPanda/fastify-openapi-docs?token=RUV24SG0GL)](https://codecov.io/gh/ShogunPanda/fastify-openapi-docs)
 
 A simple plugin for Fastify that generates OpenAPI spec automatically.
 
