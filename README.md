@@ -144,6 +144,12 @@ Once started, the following routes will be available:
 
 Note that `$ref` in the schemas will be resolved and replaced accordingly to OpenAPI spec.
 
+## ESM Only
+
+This package only supports to be directly imported in a ESM context.
+
+For informations on how to use it in a CommonJS context, please check [this page](https://gist.github.com/ShogunPanda/fe98fd23d77cdfb918010dbc42f4504d).
+
 ## Contributing to fastify-openapi-docs
 
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
