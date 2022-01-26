@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { FastifyInstance, FastifySchema, RouteOptions } from 'fastify'
 
 interface RouteConfig {
@@ -118,14 +117,14 @@ function cleanSpec(object: Schema): Schema {
 
       // Check if there is a multiple type defined - Replace with anyOf since OpenAPI does not support type arrays
       if (Array.isArray(cleanedValue.type)) {
-        cleanedValue.anyOf = cleanedValue.type.map((t: string) => ({ type: t }))
+        cleanedValue.anyOf = cleanedValue.type.map(t => ({ type: t }))
         delete cleanedValue.type
       }
 
       cleaned[key] = cleanedValue
     } else if (Array.isArray(value)) {
       // Recurse into array
-      cleaned[key] = value.map((item: Schema) => (typeof item === 'object' ? cleanSpec(item) : item))
+      cleaned[key] = value.map(item => (typeof item === 'object' ? cleanSpec(item) : item))
     } else {
       // Return other properties unchanged
       cleaned[key] = value
@@ -160,9 +159,7 @@ export function buildSpec(
   }
 
   // Get the visible routes and sort them
-  const apiRoutes = routes
-    .filter((r: RouteOptions) => getRouteConfig(r).hide !== true)
-    .sort((a: RouteOptions, b: RouteOptions) => a.url.localeCompare(b.url))
+  const apiRoutes = routes.filter(r => getRouteConfig(r).hide !== true).sort((a, b) => a.url.localeCompare(b.url))
 
   // For each route
   for (const route of apiRoutes) {
@@ -176,7 +173,7 @@ export function buildSpec(
 
     // Sort available methods
     const methods = (Array.isArray(route.method) ? route.method : [route.method]).sort(
-      (a: string, b: string) => methodsOrder.indexOf(a) - methodsOrder.indexOf(b)
+      (a, b) => methodsOrder.indexOf(a) - methodsOrder.indexOf(b)
     )
 
     // Get OpenAPI supported tags

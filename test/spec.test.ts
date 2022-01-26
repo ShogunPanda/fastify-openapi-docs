@@ -1,11 +1,8 @@
-/* eslint-disable no-useless-escape */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 
 import fastify, { FastifyReply, FastifyRequest } from 'fastify'
 import t from 'tap'
 import { plugin as fastifyOpenApiDocs } from '../src'
-
-type Test = typeof t
 
 const openapi = {
   // All these fields are optional, but they should be provided to satisfy OpenAPI specification.
@@ -40,8 +37,8 @@ const openapi = {
   }
 }
 
-t.test('Spec generation', (t: Test) => {
-  t.test('should correctly generate a OpenAPI spec in JSON and YAML format', async (t: Test) => {
+t.test('Spec generation', t => {
+  t.test('should correctly generate a OpenAPI spec in JSON and YAML format', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, { openapi })
@@ -274,7 +271,7 @@ paths:
     })
   })
 
-  t.test('should accept routes with no OpenAPI annotations and hide routes', async (t: Test) => {
+  t.test('should accept routes with no OpenAPI annotations and hide routes', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, {
@@ -442,7 +439,7 @@ paths:
     })
   })
 
-  t.test('should accept routes with no schema', async (t: Test) => {
+  t.test('should accept routes with no schema', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, {})
@@ -479,7 +476,7 @@ paths:
     })
   })
 
-  t.test('should resolve $ref in params', async (t: Test) => {
+  t.test('should resolve $ref in params', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, {})
@@ -520,7 +517,7 @@ paths:
     })
   })
 
-  t.test('should recognized $raw and $empty', async (t: Test) => {
+  t.test('should recognized $raw and $empty', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, {})
@@ -569,7 +566,7 @@ paths:
     })
   })
 
-  t.test('should replace multiple types with anyOf', async (t: Test) => {
+  t.test('should replace multiple types with anyOf', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, {})

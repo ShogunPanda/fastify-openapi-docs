@@ -47,12 +47,12 @@ export const plugin = fastifyPlugin(
     })
 
     // Utility to track all the RouteOptions we add
-    instance.addHook('onRoute', (route: RouteOptions) => {
+    instance.addHook('onRoute', route => {
       routes.push(route)
     })
 
     // When the server starts, add all schemas and routes to the spec
-    instance.addHook('onReady', (done: () => void) => {
+    instance.addHook('onReady', done => {
       spec = buildSpec(instance, spec, instance.getSchemas() as { [key: string]: Schema }, routes)
       done()
     })

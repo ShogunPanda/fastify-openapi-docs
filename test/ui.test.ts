@@ -1,14 +1,11 @@
-/* eslint-disable no-useless-escape */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 
 import fastify from 'fastify'
 import t from 'tap'
 import { plugin as fastifyOpenApiDocs } from '../src'
 
-type Test = typeof t
-
-t.test('UI serving', (t: Test) => {
-  t.test('should serve the UI by default', async (t: Test) => {
+t.test('UI serving', t => {
+  t.test('should serve the UI by default', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, {})
@@ -24,7 +21,7 @@ t.test('UI serving', (t: Test) => {
     t.equal(defaultBody, indexBody)
   })
 
-  t.test('should not serve the UI if requested to', async (t: Test) => {
+  t.test('should not serve the UI if requested to', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, { skipUI: true })
@@ -41,7 +38,7 @@ t.test('UI serving', (t: Test) => {
     t.equal(indexBody, '{"message":"Route GET:/docs/index.html not found","error":"Not Found","statusCode":404}')
   })
 
-  t.test('should respect the right prefix', async (t: Test) => {
+  t.test('should respect the right prefix', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, { prefix: 'another' })
@@ -57,7 +54,7 @@ t.test('UI serving', (t: Test) => {
     t.equal(defaultBody, indexBody)
   })
 
-  t.test('should allow multiple instances', async (t: Test) => {
+  t.test('should allow multiple instances', async t => {
     const server = fastify()
 
     server.register(fastifyOpenApiDocs, { prefix: 'v1' })

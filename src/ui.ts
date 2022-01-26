@@ -33,7 +33,7 @@ export function addUI(instance: FastifyInstance, prefix: string): void {
   // This hook is required because we have to serve the patched index file in order to point to the local documentation
   // eslint-disable-next-line no-useless-escape
   const indexUrl = new RegExp(`^(?:${prefix.replace(/\//g, '\\/')}\/(?:index\.html)?)$`)
-  instance.addHook('preHandler', (request: FastifyRequest, reply: FastifyReply, done: () => void) => {
+  instance.addHook('preHandler', (request, reply, done) => {
     if (request.raw.url!.match(indexUrl)) {
       reply.header('Content-Type', 'text/html; charset=UTF-8')
       reply.send(swaggerUIRootIndex)
