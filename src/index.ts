@@ -9,8 +9,8 @@ import {
 } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
 import yaml from 'js-yaml'
-import { buildSpec, Schema } from './spec'
-import { addUI } from './ui'
+import { buildSpec, Schema } from './spec.js'
+import { addUI } from './ui.js'
 
 export const plugin = fastifyPlugin(
   function (instance: FastifyInstance, options: FastifyPluginOptions, done: (error?: FastifyError) => void): void {

@@ -2,7 +2,7 @@
 
 import fastify from 'fastify'
 import t from 'tap'
-import { plugin as fastifyOpenApiDocs } from '../src'
+import { plugin as fastifyOpenApiDocs } from '../src/index.js'
 
 t.test('UI serving', t => {
   t.test('should serve the UI by default', async t => {

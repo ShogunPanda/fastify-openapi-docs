@@ -166,7 +166,7 @@ export function buildSpec(
     const config = getRouteConfig(route)
 
     // OpenAPI groups by path and then method
-    const path = route.url.replace(/:([a-zA-Z_]+)/g, '{$1}')
+    const path = route.url.replace(/:([A-Z_a-z]+)/g, '{$1}')
     if (!spec.paths[path]) {
       spec.paths[path] = {}
     }

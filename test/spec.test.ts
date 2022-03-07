@@ -2,7 +2,7 @@
 
 import fastify, { FastifyReply, FastifyRequest } from 'fastify'
 import t from 'tap'
-import { plugin as fastifyOpenApiDocs } from '../src'
+import { plugin as fastifyOpenApiDocs } from '../src/index.js'
 
 const openapi = {
   // All these fields are optional, but they should be provided to satisfy OpenAPI specification.

@@ -2,8 +2,8 @@
 
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import fastifyStatic from 'fastify-static'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { getAbsoluteFSPath } from 'swagger-ui-dist'
 
 export function addUI(instance: FastifyInstance, prefix: string): void {
@@ -34,7 +34,7 @@ export function addUI(instance: FastifyInstance, prefix: string): void {
   // eslint-disable-next-line no-useless-escape
   const indexUrl = new RegExp(`^(?:${prefix.replace(/\//g, '\\/')}\/(?:index\.html)?)$`)
   instance.addHook('preHandler', (request, reply, done) => {
-    if (request.raw.url!.match(indexUrl)) {
+    if (indexUrl.test(request.raw.url!)) {
       reply.header('Content-Type', 'text/html; charset=UTF-8')
       reply.send(swaggerUIRootIndex)
     }
