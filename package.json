@@ -47,7 +47,7 @@
     "swagger-ui-dist": "^4.6.1"
   },
   "devDependencies": {
-    "@cowtech/eslint-config": "^8.4.0",
+    "@cowtech/eslint-config": "^8.6.1",
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.150",
     "@types/js-yaml": "^4.0.5",
@@ -58,7 +58,7 @@
     "chokidar": "^3.5.3",
     "fastify": "^3.27.2",
     "prettier": "^2.5.1",
-    "tap": "^15.2.3",
+    "tap": "^16.0.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2"
   },
