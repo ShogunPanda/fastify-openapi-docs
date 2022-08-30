@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 
+import fastifyStatic from '@fastify/static'
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import fastifyStatic from 'fastify-static'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { getAbsoluteFSPath } from 'swagger-ui-dist'
@@ -9,7 +9,7 @@ import { getAbsoluteFSPath } from 'swagger-ui-dist'
 export function addUI(instance: FastifyInstance, prefix: string): void {
   // Get the main index file and patch it
   const swaggerUIRoot = getAbsoluteFSPath()
-  const swaggerUIRootIndex = readFileSync(resolve(swaggerUIRoot, 'index.html'), 'utf8').replace(
+  const swaggerUIInitializer = readFileSync(resolve(swaggerUIRoot, 'swagger-initializer.js'), 'utf8').replace(
     /url: "(.*)"/,
     `url: "${prefix}/openapi.json"`
   )
@@ -32,11 +32,11 @@ export function addUI(instance: FastifyInstance, prefix: string): void {
 
   // This hook is required because we have to serve the patched index file in order to point to the local documentation
   // eslint-disable-next-line no-useless-escape
-  const indexUrl = new RegExp(`^(?:${prefix.replace(/\//g, '\\/')}\/(?:index\.html)?)$`)
+  const initializerUrl = new RegExp(`^(?:${prefix.replace(/\//g, '\\/')}\/swagger-initializer\\.js)$`)
   instance.addHook('preHandler', (request, reply, done) => {
-    if (indexUrl.test(request.raw.url!)) {
-      reply.header('Content-Type', 'text/html; charset=UTF-8')
-      reply.send(swaggerUIRootIndex)
+    if (initializerUrl.test(request.raw.url!)) {
+      reply.header('Content-Type', 'application/javascript; charset=UTF-8')
+      reply.send(swaggerUIInitializer)
     }
 
     done()

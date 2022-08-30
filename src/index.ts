@@ -48,6 +48,10 @@ export const plugin = fastifyPlugin(
 
     // Utility to track all the RouteOptions we add
     instance.addHook('onRoute', route => {
+      if (route.path.startsWith(prefix)) {
+        return
+      }
+
       routes.push(route)
     })
 
@@ -59,7 +63,7 @@ export const plugin = fastifyPlugin(
 
     done()
   },
-  { name: 'fastify-openapi-docs' }
+  { name: 'fastify-openapi-docs', fastify: '4.x' }
 )
 
 export default plugin

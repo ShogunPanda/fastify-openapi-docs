@@ -41,18 +41,17 @@ t.test('Spec generation', t => {
   t.test('should correctly generate a OpenAPI spec in JSON and YAML format', async t => {
     const server = fastify()
 
-    server.register(fastifyOpenApiDocs, { openapi })
+    await server.register(fastifyOpenApiDocs, { openapi })
 
     server.addSchema({
       type: 'object',
-      $id: '#request',
+      $id: 'request',
       description: 'The request payload',
       properties: {
         id: {
           type: 'string',
           description: 'The operation id',
-          pattern: '^.+$',
-          example: true
+          pattern: '^.+$'
         }
       },
       required: ['id'],
@@ -61,13 +60,12 @@ t.test('Spec generation', t => {
 
     server.addSchema({
       type: 'object',
-      $id: '#response',
+      $id: 'response',
       description: 'The response payload',
       properties: {
         ok: {
           type: 'boolean',
-          description: 'The operation response',
-          example: true
+          description: 'The operation response'
         }
       },
       required: ['ok'],
@@ -78,9 +76,9 @@ t.test('Spec generation', t => {
       method: 'POST',
       url: '/path',
       schema: {
-        body: { $ref: '#request' },
+        body: { $ref: 'request#' },
         response: {
-          200: { $ref: '#response' }
+          200: { $ref: 'response#' }
         }
       },
       config: {
@@ -135,7 +133,6 @@ components:
           type: string
           description: The operation id
           pattern: ^.+$
-          example: true
       required:
         - id
       additionalProperties: false
@@ -146,7 +143,6 @@ components:
         ok:
           type: boolean
           description: The operation response
-          example: true
       required:
         - ok
       additionalProperties: false
@@ -219,8 +215,7 @@ paths:
               id: {
                 type: 'string',
                 description: 'The operation id',
-                pattern: '^.+$',
-                example: true
+                pattern: '^.+$'
               }
             },
             required: ['id'],
@@ -232,8 +227,7 @@ paths:
             properties: {
               ok: {
                 type: 'boolean',
-                description: 'The operation response',
-                example: true
+                description: 'The operation response'
               }
             },
             required: ['ok'],
@@ -274,7 +268,7 @@ paths:
   t.test('should accept routes with no OpenAPI annotations and hide routes', async t => {
     const server = fastify()
 
-    server.register(fastifyOpenApiDocs, {
+    await server.register(fastifyOpenApiDocs, {
       prefix: 'another',
       openapi: {
         components: {
@@ -286,14 +280,13 @@ paths:
 
     server.addSchema({
       type: 'object',
-      $id: '#request',
+      $id: 'request',
       description: 'The request payload',
       properties: {
         id: {
           type: 'string',
           description: 'The operation id',
-          pattern: '^.+$',
-          example: true
+          pattern: '^.+$'
         }
       },
       required: ['id'],
@@ -302,13 +295,12 @@ paths:
 
     server.addSchema({
       type: 'object',
-      $id: '#response',
+      $id: 'response',
       description: 'The response payload',
       properties: {
         ok: {
           type: 'boolean',
-          description: 'The operation response',
-          example: true
+          description: 'The operation response'
         }
       },
       required: ['ok'],
@@ -316,7 +308,7 @@ paths:
     })
 
     server.route({
-      method: ['GET', 'POST'],
+      method: ['POST'],
       url: '/path/:id',
       schema: {
         params: {
@@ -328,9 +320,9 @@ paths:
           },
           required: ['id']
         },
-        body: { $ref: '#request' },
+        body: { $ref: 'request#' },
         response: {
-          200: { $ref: '#response' }
+          200: { $ref: 'response#' }
         }
       },
       handler(_: FastifyRequest, reply: FastifyReply): void {
@@ -361,8 +353,7 @@ paths:
               id: {
                 type: 'string',
                 description: 'The operation id',
-                pattern: '^.+$',
-                example: true
+                pattern: '^.+$'
               }
             },
             required: ['id'],
@@ -374,8 +365,7 @@ paths:
             properties: {
               ok: {
                 type: 'boolean',
-                description: 'The operation response',
-                example: true
+                description: 'The operation response'
               }
             },
             required: ['ok'],
@@ -385,26 +375,6 @@ paths:
       },
       paths: {
         '/path/{id}': {
-          get: {
-            parameters: [
-              {
-                name: 'id',
-                in: 'path',
-                required: true
-              }
-            ],
-            responses: {
-              200: {
-                content: {
-                  'application/json': {
-                    schema: {
-                      $ref: '#/components/schemas/response'
-                    }
-                  }
-                }
-              }
-            }
-          },
           post: {
             parameters: [
               {
@@ -442,7 +412,7 @@ paths:
   t.test('should accept routes with no schema', async t => {
     const server = fastify()
 
-    server.register(fastifyOpenApiDocs, {})
+    await server.register(fastifyOpenApiDocs, {})
 
     server.route({
       method: 'GET',
@@ -470,6 +440,7 @@ paths:
       paths: {
         '/path': {
           get: {},
+          head: {},
           post: {}
         }
       }
@@ -479,11 +450,11 @@ paths:
   t.test('should resolve $ref in params', async t => {
     const server = fastify()
 
-    server.register(fastifyOpenApiDocs, {})
+    await server.register(fastifyOpenApiDocs, {})
 
     server.addSchema({
       type: 'object',
-      $id: '#params'
+      $id: 'params'
     })
 
     server.route({
@@ -491,7 +462,7 @@ paths:
       url: '/path',
       schema: {
         params: {
-          $ref: '#params'
+          $ref: 'params#'
         }
       },
       handler(_: FastifyRequest, reply: FastifyReply): void {
@@ -511,7 +482,8 @@ paths:
       },
       paths: {
         '/path': {
-          get: {}
+          get: {},
+          head: {}
         }
       }
     })
@@ -520,7 +492,7 @@ paths:
   t.test('should recognized $raw and $empty', async t => {
     const server = fastify()
 
-    server.register(fastifyOpenApiDocs, {})
+    await server.register(fastifyOpenApiDocs, {})
 
     server.route({
       method: 'GET',
@@ -560,6 +532,16 @@ paths:
               },
               204: {}
             }
+          },
+          head: {
+            responses: {
+              200: {
+                content: {
+                  'text/yaml': {}
+                }
+              },
+              204: {}
+            }
           }
         }
       }
@@ -569,7 +551,7 @@ paths:
   t.test('should replace multiple types with anyOf', async t => {
     const server = fastify()
 
-    server.register(fastifyOpenApiDocs, {})
+    await server.register(fastifyOpenApiDocs, {})
 
     server.route({
       method: 'GET',
@@ -598,6 +580,24 @@ paths:
       paths: {
         '/path': {
           get: {
+            responses: {
+              200: {
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'object',
+                      properties: {
+                        ok: {
+                          anyOf: [{ type: 'boolean' }, { type: 'null' }]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          head: {
             responses: {
               200: {
                 content: {

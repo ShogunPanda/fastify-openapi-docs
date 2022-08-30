@@ -45,7 +45,15 @@ import fastifyOpenapiDocs from 'fastify-openapi-docs'
 
 const server = fastify()
 
-server.register(fastifyOpenapiDocs, {
+/*
+Since fastify-openapi-docs uses an onRoute hook, you have to either:
+
+* use `await register...`
+* wrap you routes definitions in a plugin
+
+See: https://www.fastify.io/docs/latest/Guides/Migration-Guide-V4/#synchronous-route-definitions
+*/
+await server.register(fastifyOpenapiDocs, {
   openapi: {
     // All these fields are optional, but they should be provided to satisfy OpenAPI specification.
     openapi: '3.0.3',
@@ -82,14 +90,13 @@ server.register(fastifyOpenapiDocs, {
 
 server.addSchema({
   type: 'object',
-  $id: '#request',
+  $id: 'request',
   description: 'The request payload',
   properties: {
     id: {
       type: 'string',
       description: 'The operation id',
-      pattern: '^.+$',
-      example: true
+      pattern: '^.+$'
     }
   },
   required: ['id'],
@@ -98,13 +105,12 @@ server.addSchema({
 
 server.addSchema({
   type: 'object',
-  $id: '#response',
+  $id: 'response',
   description: 'The response payload',
   properties: {
     ok: {
       type: 'boolean',
-      description: 'The operation response',
-      example: true
+      description: 'The operation response'
     }
   },
   required: ['ok'],
@@ -115,9 +121,9 @@ server.route({
   method: 'POST',
   url: '/path',
   schema: {
-    body: { $ref: '#request' },
+    body: { $ref: 'request#' },
     response: {
-      200: { $ref: '#response' }
+      200: { $ref: 'response#' }
     }
   },
   config: {
@@ -133,7 +139,7 @@ server.route({
   }
 })
 
-server.listen(3000)
+server.listen({ port: 3000 })
 ```
 
 Once started, the following routes will be available:

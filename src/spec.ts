@@ -38,9 +38,11 @@ function parseParameters(instance: FastifyInstance, schema: Schema): Schema | un
     }
 
     // Get the list of required parameters
+    /* c8 ignore next */
     const required: Array<string> = specs.required ?? []
 
     // For each property
+    /* c8 ignore next */
     for (const name of Object.keys(specs.properties ?? {})) {
       params.push({
         name,
@@ -63,7 +65,7 @@ function parsePayload(schema: Schema): Schema | undefined {
     description: schema.description,
     content: {
       'application/json': {
-        schema: schema
+        schema
       }
     }
   }
@@ -107,7 +109,7 @@ function cleanSpec(object: Schema): Schema {
 
     // If it is a reference, replace it
     if (key === '$ref') {
-      return { $ref: value.replace('#', '#/components/schemas/') }
+      return { $ref: value.replace(/(.+)#$/, '#/components/schemas/$1') }
     }
 
     // If is a object
