@@ -47,7 +47,7 @@
     "swagger-ui-dist": "^4.14.0"
   },
   "devDependencies": {
-    "@cowtech/eslint-config": "^8.7.1",
+    "@cowtech/eslint-config": "^8.7.2",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.245",
     "@types/js-yaml": "^4.0.5",
