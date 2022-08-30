@@ -1,3 +1,7 @@
+### 2022-08-30 / 2.0.1
+
+- chore: Updated dependencies.
+
 ### 2022-08-30 / 2.0.0
 
 - feat: Updated to fastify 4.
