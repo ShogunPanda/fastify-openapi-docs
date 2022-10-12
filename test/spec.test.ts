@@ -588,7 +588,7 @@ paths:
                       type: 'object',
                       properties: {
                         ok: {
-                          anyOf: [{ type: 'boolean' }, { type: 'null' }]
+                          anyOf: [{ type: 'null' }, { type: 'boolean' }]
                         }
                       }
                     }
@@ -606,7 +606,7 @@ paths:
                       type: 'object',
                       properties: {
                         ok: {
-                          anyOf: [{ type: 'boolean' }, { type: 'null' }]
+                          anyOf: [{ type: 'null' }, { type: 'boolean' }]
                         }
                       }
                     }
