@@ -1,3 +1,9 @@
+### 2022-10-24 / 2.0.3
+
+- fix: Respect ignoreTrailingSlash.
+- chore: Update package.json
+- fix: Fixed build script.
+
 ### 2022-10-12 / 2.0.2
 
 - fix: Updated types layout.
