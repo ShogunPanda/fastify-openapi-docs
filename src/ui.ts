@@ -7,6 +7,12 @@ import { resolve } from 'node:path'
 import { getAbsoluteFSPath } from 'swagger-ui-dist'
 
 export function addUI(instance: FastifyInstance, prefix: string): void {
+  let indexUrl = `${prefix}/`
+
+  if (instance.initialConfig.ignoreTrailingSlash) {
+    indexUrl += 'index.html'
+  }
+
   // Get the main index file and patch it
   const swaggerUIRoot = getAbsoluteFSPath()
   const swaggerUIInitializer = readFileSync(resolve(swaggerUIRoot, 'swagger-initializer.js'), 'utf8').replace(
@@ -19,7 +25,7 @@ export function addUI(instance: FastifyInstance, prefix: string): void {
     method: 'GET',
     url: prefix,
     handler(_: FastifyRequest, reply: FastifyReply): void {
-      reply.redirect(301, `${prefix}/`)
+      reply.redirect(301, indexUrl)
     }
   })
 

@@ -69,5 +69,49 @@ t.test('UI serving', t => {
     t.ok(initializerBodyV2.indexOf('url: "/v2/openapi.json",') > 0)
   })
 
+  t.test('should respect ignoreTrailingSlash option', async t => {
+    {
+      const server = fastify({ ignoreTrailingSlash: false })
+
+      await server.register(fastifyOpenApiDocs, {})
+
+      const initialRequest = await server.inject('/docs')
+
+      t.equal(initialRequest.statusCode, 301)
+      t.equal(initialRequest.body, '')
+      t.equal(initialRequest.headers.location, '/docs/')
+
+      const redirectedRequest = await server.inject('/docs/')
+      t.equal(redirectedRequest.statusCode, 200)
+    }
+
+    {
+      const server = fastify({ ignoreTrailingSlash: true })
+
+      await server.register(fastifyOpenApiDocs, {})
+
+      const initialRequest = await server.inject('/docs')
+
+      t.equal(initialRequest.statusCode, 301)
+      t.equal(initialRequest.body, '')
+      t.equal(initialRequest.headers.location, '/docs/index.html')
+    }
+
+    {
+      const server = fastify({ ignoreTrailingSlash: true })
+
+      await server.register(fastifyOpenApiDocs, {})
+
+      const initialRequest = await server.inject('/docs/')
+
+      t.equal(initialRequest.statusCode, 301)
+      t.equal(initialRequest.body, '')
+      t.equal(initialRequest.headers.location, '/docs/index.html')
+
+      const redirectedRequest = await server.inject('/docs/index.html')
+      t.equal(redirectedRequest.statusCode, 200)
+    }
+  })
+
   t.end()
 })
