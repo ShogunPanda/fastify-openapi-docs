@@ -60,13 +60,13 @@ function parseParameters(instance: FastifyInstance, schema: Schema): Schema | un
   return params
 }
 
-function parsePayload(schema: Schema): Schema | undefined {
+function parsePayload(payloadSchema: Schema, mime?: string): Schema | undefined {
+  const { description, ...schema } = payloadSchema
+
   return {
-    description: schema.description,
+    description,
     content: {
-      'application/json': {
-        schema
-      }
+      [mime ?? 'application/json']: { schema }
     }
   }
 }
@@ -194,7 +194,7 @@ export function buildSpec(
         responses: 'response' in schema ? parseResponses(schema.response as Response) : undefined,
         requestBody:
           'body' in schema && ['PUT', 'PATCH', 'POST'].includes(method)
-            ? parsePayload(schema.body as Schema)
+            ? parsePayload(schema.body as Schema, config?.bodyMime)
             : undefined
       }
     }

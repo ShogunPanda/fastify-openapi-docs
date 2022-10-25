@@ -489,7 +489,7 @@ paths:
     })
   })
 
-  t.test('should recognized $raw and $empty', async t => {
+  t.test('should recognize $raw and $empty', async t => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, {})
@@ -610,6 +610,142 @@ paths:
                         }
                       }
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+  })
+
+  t.test('should accept routes with non JSON request body', async t => {
+    const server = fastify()
+
+    await server.register(fastifyOpenApiDocs, {
+      prefix: 'another',
+      openapi: {
+        components: {
+          schemas: {}
+        },
+        paths: {}
+      }
+    })
+
+    server.addSchema({
+      type: 'object',
+      $id: 'request',
+      description: 'The request payload',
+      properties: {
+        id: {
+          type: 'string',
+          description: 'The operation id',
+          pattern: '^.+$'
+        }
+      },
+      required: ['id'],
+      additionalProperties: false
+    })
+
+    server.addSchema({
+      type: 'object',
+      $id: 'response',
+      description: 'The response payload',
+      properties: {
+        ok: {
+          type: 'boolean',
+          description: 'The operation response'
+        }
+      },
+      required: ['ok'],
+      additionalProperties: false
+    })
+
+    server.route({
+      method: ['POST'],
+      url: '/path/:id',
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
+            }
+          },
+          required: ['id']
+        },
+        body: { $ref: 'request#' },
+        response: {
+          200: { $ref: 'response#' }
+        }
+      },
+      config: {
+        bodyMime: 'multipart/form-data'
+      },
+      handler(_: FastifyRequest, reply: FastifyReply): void {
+        reply.send({ ok: true })
+      }
+    })
+
+    const { body: jsonSpec } = await server.inject('/another/openapi.json')
+
+    t.same(JSON.parse(jsonSpec), {
+      components: {
+        schemas: {
+          request: {
+            type: 'object',
+            description: 'The request payload',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'The operation id',
+                pattern: '^.+$'
+              }
+            },
+            required: ['id'],
+            additionalProperties: false
+          },
+          response: {
+            type: 'object',
+            description: 'The response payload',
+            properties: {
+              ok: {
+                type: 'boolean',
+                description: 'The operation response'
+              }
+            },
+            required: ['ok'],
+            additionalProperties: false
+          }
+        }
+      },
+      paths: {
+        '/path/{id}': {
+          post: {
+            parameters: [
+              {
+                name: 'id',
+                in: 'path',
+                required: true
+              }
+            ],
+            responses: {
+              200: {
+                content: {
+                  'application/json': {
+                    schema: {
+                      $ref: '#/components/schemas/response'
+                    }
+                  }
+                }
+              }
+            },
+            requestBody: {
+              content: {
+                'multipart/form-data': {
+                  schema: {
+                    $ref: '#/components/schemas/request'
                   }
                 }
               }
