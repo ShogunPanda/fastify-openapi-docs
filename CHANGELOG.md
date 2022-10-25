@@ -1,3 +1,7 @@
+### 2022-10-25 / 2.1.0
+
+- feat: Allow to specify bodyMime.
+
 ### 2022-10-24 / 2.0.3
 
 - fix: Respect ignoreTrailingSlash.
