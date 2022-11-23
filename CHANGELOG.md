@@ -1,3 +1,7 @@
+### 2022-11-23 / 2.1.1
+
+- chore: Updated dependencies.
+
 ### 2022-10-25 / 2.1.0
 
 - feat: Allow to specify bodyMime.
