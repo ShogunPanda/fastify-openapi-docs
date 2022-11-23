@@ -39,7 +39,7 @@ function parseParameters(instance: FastifyInstance, schema: Schema): Schema | un
 
     // Get the list of required parameters
     /* c8 ignore next */
-    const required: Array<string> = specs.required ?? []
+    const required: string[] = specs.required ?? []
 
     // For each property
     /* c8 ignore next */
@@ -140,7 +140,7 @@ export function buildSpec(
   instance: FastifyInstance,
   spec: Schema,
   schemas: { [key: string]: Schema },
-  routes: Array<RouteOptions>
+  routes: RouteOptions[]
 ): Schema {
   // Prepare the spec
   if (!('components' in spec)) {
@@ -168,7 +168,7 @@ export function buildSpec(
     const config = getRouteConfig(route)
 
     // OpenAPI groups by path and then method
-    const path = route.url.replace(/:([A-Z_a-z]+)/g, '{$1}')
+    const path = route.url.replaceAll(/:([A-Z_a-z]+)/g, '{$1}')
     if (!spec.paths[path]) {
       spec.paths[path] = {}
     }

@@ -16,7 +16,7 @@ export const plugin = fastifyPlugin(
   function (instance: FastifyInstance, options: FastifyPluginOptions, done: (error?: FastifyError) => void): void {
     let prefix = options.prefix ?? '/docs'
     let spec: Schema = options.openapi ?? {}
-    const routes: Array<RouteOptions> = []
+    const routes: RouteOptions[] = []
 
     if (prefix.indexOf('/') !== 0) {
       prefix = `/${prefix}`
