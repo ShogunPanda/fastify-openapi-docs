@@ -1,3 +1,8 @@
+### 2022-12-06 / 2.2.0
+
+- feat: Added hideHead option.
+- fix: Fixed README.md.
+
 ### 2022-11-23 / 2.1.1
 
 - chore: Updated dependencies.
