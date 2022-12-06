@@ -161,7 +161,12 @@ export function buildSpec(
   }
 
   // Get the visible routes and sort them
-  const apiRoutes = routes.filter(r => getRouteConfig(r).hide !== true).sort((a, b) => a.url.localeCompare(b.url))
+  const apiRoutes = routes
+    .filter(r => {
+      const config = getRouteConfig(r)
+      return config.hide !== true && !(config.hideHead === true && r.method === 'HEAD')
+    })
+    .sort((a, b) => a.url.localeCompare(b.url))
 
   // For each route
   for (const route of apiRoutes) {

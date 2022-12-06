@@ -46,6 +46,8 @@ response: {
 
 Routes can be omitted from spec by the list by setting `hide` option to `true` inside their `config`.
 
+HEAD routes automatically created by fastify when declaring GET routes can be omitted from spec by the list by setting `hideHead` option to `true` inside their `config`.
+
 Routes can accept MIME types other than `application/json` by providing it in the `bodyMime` option inside their `config`.
 
 Once the server is started, it will serve the OpenAPI specification on both `/{prefix}/openapi.json` and `/{prefix}/openapi.yaml`.

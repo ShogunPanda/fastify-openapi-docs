@@ -447,6 +447,104 @@ paths:
     })
   })
 
+  t.test('should accept routes and hide HEAD routes', async t => {
+    const server = fastify()
+
+    await server.register(fastifyOpenApiDocs, {
+      prefix: 'another',
+      openapi: {
+        components: {
+          schemas: {}
+        },
+        paths: {}
+      }
+    })
+
+    server.addSchema({
+      type: 'object',
+      $id: 'response',
+      description: 'The response payload',
+      properties: {
+        ok: {
+          type: 'boolean',
+          description: 'The operation response'
+        }
+      },
+      required: ['ok'],
+      additionalProperties: false
+    })
+
+    server.route({
+      method: 'GET',
+      url: '/path/:id',
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
+            }
+          },
+          required: ['id']
+        },
+        response: {
+          200: { $ref: 'response#' }
+        }
+      },
+      config: {
+        hideHead: true
+      },
+      handler(_: FastifyRequest, reply: FastifyReply): void {
+        reply.send({ ok: true })
+      }
+    })
+
+    const { body: jsonSpec } = await server.inject('/another/openapi.json')
+
+    t.same(JSON.parse(jsonSpec), {
+      components: {
+        schemas: {
+          response: {
+            type: 'object',
+            description: 'The response payload',
+            properties: {
+              ok: {
+                type: 'boolean',
+                description: 'The operation response'
+              }
+            },
+            required: ['ok'],
+            additionalProperties: false
+          }
+        }
+      },
+      paths: {
+        '/path/{id}': {
+          get: {
+            parameters: [
+              {
+                name: 'id',
+                in: 'path',
+                required: true
+              }
+            ],
+            responses: {
+              200: {
+                content: {
+                  'application/json': {
+                    schema: {
+                      $ref: '#/components/schemas/response'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+  })
+
   t.test('should resolve $ref in params', async t => {
     const server = fastify()
 
