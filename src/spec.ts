@@ -43,11 +43,14 @@ function parseParameters(instance: FastifyInstance, schema: Schema): Schema | un
 
     // For each property
     /* c8 ignore next */
-    for (const name of Object.keys(specs.properties ?? {})) {
+    for (const [name, rawSpec] of Object.entries(specs.properties ?? {})) {
+      const spec = rawSpec as Schema
+
       params.push({
         name,
         in: where,
-        description: specs.description,
+        description: spec.description,
+        schema: { type: spec.type ?? 'string' },
         required: required.includes(name)
       })
     }

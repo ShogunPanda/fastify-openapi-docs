@@ -76,6 +76,13 @@ t.test('Spec generation', t => {
       method: 'POST',
       url: '/path',
       schema: {
+        headers: {
+          type: 'object',
+          properties: {
+            why: { description: 'The reason' }
+          },
+          required: ['x-app-id']
+        },
         body: { $ref: 'request#' },
         response: {
           200: { $ref: 'response#' }
@@ -153,6 +160,13 @@ paths:
       description: Makes a request
       tags:
         - service
+      parameters:
+        - name: why
+          in: header
+          description: The reason
+          schema:
+            type: string
+          required: false
       responses:
         '200':
           content:
@@ -241,6 +255,17 @@ paths:
             summary: 'Main route',
             description: 'Makes a request',
             tags: ['service'],
+            parameters: [
+              {
+                name: 'why',
+                in: 'header',
+                description: 'The reason',
+                required: false,
+                schema: {
+                  type: 'string'
+                }
+              }
+            ],
             responses: {
               200: {
                 content: {
@@ -380,7 +405,10 @@ paths:
               {
                 name: 'id',
                 in: 'path',
-                required: true
+                required: true,
+                schema: {
+                  type: 'string'
+                }
               }
             ],
             responses: {
@@ -525,7 +553,10 @@ paths:
               {
                 name: 'id',
                 in: 'path',
-                required: true
+                required: true,
+                schema: {
+                  type: 'string'
+                }
               }
             ],
             responses: {
@@ -825,7 +856,10 @@ paths:
               {
                 name: 'id',
                 in: 'path',
-                required: true
+                required: true,
+                schema: {
+                  type: 'string'
+                }
               }
             ],
             responses: {
