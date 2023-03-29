@@ -1,3 +1,8 @@
+### 2023-03-29 / 2.2.1
+
+- fix: Use parameters spec.
+- chore: CI improvement
+
 ### 2022-12-06 / 2.2.0
 
 - feat: Added hideHead option.
