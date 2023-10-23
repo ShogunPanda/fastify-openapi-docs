@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 
-import fastify, { FastifyReply, FastifyRequest } from 'fastify'
+import fastify, { type FastifyReply, type FastifyRequest } from 'fastify'
 import t from 'tap'
 import { plugin as fastifyOpenApiDocs } from '../src/index.js'
 

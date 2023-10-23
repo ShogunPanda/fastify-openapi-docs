@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import {
-  FastifyError,
-  FastifyInstance,
-  FastifyPluginOptions,
-  FastifyReply,
-  FastifyRequest,
-  RouteOptions
+  type FastifyError,
+  type FastifyInstance,
+  type FastifyPluginOptions,
+  type FastifyReply,
+  type FastifyRequest,
+  type RouteOptions
 } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
 import yaml from 'js-yaml'
-import { buildSpec, Schema } from './spec.js'
+import { buildSpec, type Schema } from './spec.js'
 import { addUI } from './ui.js'
 
 export const plugin = fastifyPlugin(
@@ -57,7 +57,7 @@ export const plugin = fastifyPlugin(
 
     // When the server starts, add all schemas and routes to the spec
     instance.addHook('onReady', done => {
-      spec = buildSpec(instance, spec, instance.getSchemas() as { [key: string]: Schema }, routes)
+      spec = buildSpec(instance, spec, instance.getSchemas() as Record<string, Schema>, routes)
       done()
     })
 

@@ -1,16 +1,12 @@
-import { FastifyInstance, FastifySchema, RouteOptions } from 'fastify'
+import { type FastifyInstance, type FastifySchema, type RouteOptions } from 'fastify'
 
-interface RouteConfig {
-  [key: string]: any
-}
+type RouteConfig = Record<string, any>
 
-export interface Schema {
-  [key: string]: any
-}
+export type Schema = Record<string, any>
 
 const methodsOrder = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
 
-const parametersSections: { [key: string]: string } = {
+const parametersSections: Record<string, string> = {
   headers: 'header',
   params: 'path',
   querystring: 'query'
@@ -79,7 +75,7 @@ function parseResponses(responses: Response): Schema {
 
   // For each response code
   for (const [code, originalResponse] of Object.entries(responses)) {
-    const { description, $raw, $empty } = originalResponse as { [key: string]: string }
+    const { description, $raw, $empty } = originalResponse as Record<string, string>
     const spec: Schema = { description }
 
     // Special handling for raw responses
@@ -142,7 +138,7 @@ function cleanSpec(object: Schema): Schema {
 export function buildSpec(
   instance: FastifyInstance,
   spec: Schema,
-  schemas: { [key: string]: Schema },
+  schemas: Record<string, Schema>,
   routes: RouteOptions[]
 ): Schema {
   // Prepare the spec
