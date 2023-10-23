@@ -1,3 +1,8 @@
+### 2023-10-23 / 2.3.0
+
+- chore: Updated dependencies and toolchain.
+- chore: Fixed compilation.
+
 ### 2023-03-29 / 2.2.1
 
 - fix: Use parameters spec.
