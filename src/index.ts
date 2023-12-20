@@ -14,7 +14,7 @@ import { addUI } from './ui.js'
 
 export const plugin = fastifyPlugin(
   function (instance: FastifyInstance, options: FastifyPluginOptions, done: (error?: FastifyError) => void): void {
-    let prefix = options.prefix ?? '/docs'
+    let prefix: string = options.prefix ?? '/docs'
     let spec: Schema = options.openapi ?? {}
     const routes: RouteOptions[] = []
 

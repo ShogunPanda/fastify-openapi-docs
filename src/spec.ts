@@ -21,11 +21,11 @@ function parseParameters(instance: FastifyInstance, schema: Schema): Schema | un
 
   // For each parameter section
   for (const [section, where] of Object.entries(parametersSections)) {
-    let specs = schema[section]
+    let specs: Schema = schema[section]
 
     // Parameters do not support $ref, so resolve the link
     if (specs?.$ref) {
-      specs = instance.getSchema(specs.$ref) as Schema
+      specs = instance.getSchema(specs.$ref as string) as Schema
     }
 
     // No spec defined, just ignore it
@@ -39,7 +39,7 @@ function parseParameters(instance: FastifyInstance, schema: Schema): Schema | un
 
     // For each property
     /* c8 ignore next */
-    for (const [name, rawSpec] of Object.entries(specs.properties ?? {})) {
+    for (const [name, rawSpec] of Object.entries((specs.properties as Schema) ?? {})) {
       const spec = rawSpec as Schema
 
       params.push({
@@ -114,7 +114,7 @@ function cleanSpec(object: Schema): Schema {
     // If is a object
     if (typeof value === 'object' && !Array.isArray(value)) {
       // Recurse into objects
-      const cleanedValue = cleanSpec(value)
+      const cleanedValue = cleanSpec(value as Schema)
 
       // Check if there is a multiple type defined - Replace with anyOf since OpenAPI does not support type arrays
       if (Array.isArray(cleanedValue.type)) {
@@ -125,7 +125,7 @@ function cleanSpec(object: Schema): Schema {
       cleaned[key] = cleanedValue
     } else if (Array.isArray(value)) {
       // Recurse into array
-      cleaned[key] = value.map(item => (typeof item === 'object' ? cleanSpec(item) : item))
+      cleaned[key] = value.map((item: Schema) => (typeof item === 'object' ? cleanSpec(item) : item)) as Schema
     } else {
       // Return other properties unchanged
       cleaned[key] = value
@@ -198,7 +198,7 @@ export function buildSpec(
         responses: 'response' in schema ? parseResponses(schema.response as Response) : undefined,
         requestBody:
           'body' in schema && ['PUT', 'PATCH', 'POST'].includes(method)
-            ? parsePayload(schema.body as Schema, config?.bodyMime)
+            ? parsePayload(schema.body as Schema, config?.bodyMime as string | undefined)
             : undefined
       }
     }
