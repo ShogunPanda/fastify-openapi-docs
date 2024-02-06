@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 
 import fastify, { type FastifyReply, type FastifyRequest } from 'fastify'
-import t from 'tap'
+import { deepStrictEqual } from 'node:assert'
+import { test } from 'node:test'
 import { plugin as fastifyOpenApiDocs } from '../src/index.js'
 
 const openapi = {
@@ -37,8 +38,8 @@ const openapi = {
   }
 }
 
-t.test('Spec generation', t => {
-  t.test('should correctly generate a OpenAPI spec in JSON and YAML format', async t => {
+test('Spec generation', async () => {
+  await test('should correctly generate a OpenAPI spec in JSON and YAML format', async () => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, { openapi })
@@ -103,7 +104,7 @@ t.test('Spec generation', t => {
     const { body: yamlSpec } = await server.inject('/docs/openapi.yaml')
     const { body: jsonSpec } = await server.inject('/docs/openapi.json')
 
-    t.equal(
+    deepStrictEqual(
       yamlSpec,
       `openapi: 3.0.3
 info:
@@ -181,7 +182,7 @@ paths:
 `
     )
 
-    t.same(JSON.parse(jsonSpec), {
+    deepStrictEqual(JSON.parse(jsonSpec), {
       openapi: '3.0.3',
       info: {
         title: 'Title',
@@ -290,7 +291,7 @@ paths:
     })
   })
 
-  t.test('should accept routes with no OpenAPI annotations and hide routes', async t => {
+  await test('should accept routes with no OpenAPI annotations and hide routes', async () => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, {
@@ -368,7 +369,7 @@ paths:
 
     const { body: jsonSpec } = await server.inject('/another/openapi.json')
 
-    t.same(JSON.parse(jsonSpec), {
+    deepStrictEqual(JSON.parse(jsonSpec), {
       components: {
         schemas: {
           request: {
@@ -437,7 +438,7 @@ paths:
     })
   })
 
-  t.test('should accept routes with no schema', async t => {
+  await test('should accept routes with no schema', async () => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, {})
@@ -461,7 +462,7 @@ paths:
 
     const { body: jsonSpec } = await server.inject('/docs/openapi.json')
 
-    t.same(JSON.parse(jsonSpec), {
+    deepStrictEqual(JSON.parse(jsonSpec), {
       components: {
         schemas: {}
       },
@@ -475,7 +476,7 @@ paths:
     })
   })
 
-  t.test('should accept routes and hide HEAD routes', async t => {
+  await test('should accept routes and hide HEAD routes', async () => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, {
@@ -529,7 +530,7 @@ paths:
 
     const { body: jsonSpec } = await server.inject('/another/openapi.json')
 
-    t.same(JSON.parse(jsonSpec), {
+    deepStrictEqual(JSON.parse(jsonSpec), {
       components: {
         schemas: {
           response: {
@@ -576,7 +577,7 @@ paths:
     })
   })
 
-  t.test('should resolve $ref in params', async t => {
+  await test('should resolve $ref in params', async () => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, {})
@@ -601,7 +602,7 @@ paths:
 
     const { body: jsonSpec } = await server.inject('/docs/openapi.json')
 
-    t.same(JSON.parse(jsonSpec), {
+    deepStrictEqual(JSON.parse(jsonSpec), {
       components: {
         schemas: {
           params: {
@@ -618,7 +619,7 @@ paths:
     })
   })
 
-  t.test('should recognize $raw and $empty', async t => {
+  await test('should recognize $raw and $empty', async () => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, {})
@@ -646,7 +647,7 @@ paths:
 
     const { body: jsonSpec } = await server.inject('/docs/openapi.json')
 
-    t.same(JSON.parse(jsonSpec), {
+    deepStrictEqual(JSON.parse(jsonSpec), {
       components: {
         schemas: {}
       },
@@ -677,7 +678,7 @@ paths:
     })
   })
 
-  t.test('should replace multiple types with anyOf', async t => {
+  await test('should replace multiple types with anyOf', async () => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, {})
@@ -704,7 +705,7 @@ paths:
 
     const { body: jsonSpec } = await server.inject('/docs/openapi.json')
 
-    t.same(JSON.parse(jsonSpec), {
+    deepStrictEqual(JSON.parse(jsonSpec), {
       components: { schemas: {} },
       paths: {
         '/path': {
@@ -749,7 +750,7 @@ paths:
     })
   })
 
-  t.test('should accept routes with non JSON request body', async t => {
+  await test('should accept routes with non JSON request body', async () => {
     const server = fastify()
 
     await server.register(fastifyOpenApiDocs, {
@@ -819,7 +820,7 @@ paths:
 
     const { body: jsonSpec } = await server.inject('/another/openapi.json')
 
-    t.same(JSON.parse(jsonSpec), {
+    deepStrictEqual(JSON.parse(jsonSpec), {
       components: {
         schemas: {
           request: {
@@ -887,6 +888,4 @@ paths:
       }
     })
   })
-
-  t.end()
 })
