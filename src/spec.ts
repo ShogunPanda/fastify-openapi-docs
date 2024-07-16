@@ -183,7 +183,7 @@ export function buildSpec(
     )
 
     // Get OpenAPI supported tags
-    const { summary, description, tags, security } = config.openapi ?? {}
+    const { summary, description, tags, operationId, security } = config.openapi ?? {}
 
     // Add the new operation
     for (const method of methods) {
@@ -192,6 +192,7 @@ export function buildSpec(
       spec.paths[path][method.toLowerCase()] = {
         summary,
         description,
+        operationId,
         tags,
         security,
         parameters: parseParameters(instance, schema),
