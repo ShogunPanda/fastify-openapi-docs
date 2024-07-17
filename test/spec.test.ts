@@ -93,7 +93,8 @@ test('Spec generation', async () => {
         openapi: {
           description: 'Makes a request',
           summary: 'Main route',
-          tags: ['service']
+          tags: ['service'],
+          operationId: 'create-request'
         }
       },
       handler(_: FastifyRequest, reply: FastifyReply): void {
@@ -159,6 +160,7 @@ paths:
     post:
       summary: Main route
       description: Makes a request
+      operationId: create-request
       tags:
         - service
       parameters:
@@ -256,6 +258,7 @@ paths:
             summary: 'Main route',
             description: 'Makes a request',
             tags: ['service'],
+            operationId: 'create-request',
             parameters: [
               {
                 name: 'why',
