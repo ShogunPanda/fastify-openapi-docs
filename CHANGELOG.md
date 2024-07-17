@@ -1,3 +1,8 @@
+### 2024-07-17 / 3.1.0
+
+- feat: Merge pull request #12 from fedorov-xyz/feat/operation-id
+- feat: Support operationId property
+
 ### 2024-04-12 / 3.0.5
 
 - chore: Updated dependencies.
