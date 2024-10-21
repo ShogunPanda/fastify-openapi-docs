@@ -23,6 +23,7 @@ function parseParameters(instance: FastifyInstance, schema: Schema): Schema | un
   for (const [section, where] of Object.entries(parametersSections)) {
     let specs: Schema = schema[section]
 
+    /* c8 ignore next 11 */
     // Parameters do not support $ref, so resolve the link
     if (specs?.$ref) {
       specs = instance.getSchema(specs.$ref as string) as Schema

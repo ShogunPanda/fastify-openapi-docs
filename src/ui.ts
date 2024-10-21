@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-
 import fastifyStatic from '@fastify/static'
 import { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fastify'
 import { readFileSync } from 'node:fs'
@@ -25,7 +23,7 @@ export function addUI(instance: FastifyInstance, prefix: string): void {
     method: 'GET',
     url: prefix,
     handler(_: FastifyRequest, reply: FastifyReply): void {
-      reply.redirect(301, indexUrl)
+      reply.redirect(indexUrl, 301)
     }
   })
 

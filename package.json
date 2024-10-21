@@ -33,37 +33,37 @@
     "build": "swc --strip-leading-paths --delete-dir-on-start -d dist src",
     "postbuild": "concurrently npm:lint npm:typecheck",
     "format": "prettier -w src test",
-    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx src test",
+    "lint": "eslint --cache",
     "typecheck": "tsc -p . --emitDeclarationOnly",
-    "test": "c8 -c test/config/c8-local.json node --import tsx --test test/*.test.ts",
-    "test:ci": "c8 -c test/config/c8-ci.json node --import tsx --test-reporter=tap --test test/*.test.ts",
+    "test": "c8 -c test/config/c8-local.json node --env-file=test.env --test test/*.test.ts",
+    "test:ci": "c8 -c test/config/c8-ci.json node --env-file=test.env --test-reporter=tap --test test/*.test.ts",
     "ci": "npm run build && npm run test:ci",
     "prepublishOnly": "npm run ci",
     "postpublish": "git push origin && git push origin -f --tags"
   },
   "dependencies": {
-    "@fastify/static": "^7.0.3",
-    "fastify-plugin": "^4.5.1",
+    "@fastify/static": "^8.0.2",
+    "fastify-plugin": "^5.0.1",
     "js-yaml": "^4.1.0",
-    "swagger-ui-dist": "^5.15.1"
+    "swagger-ui-dist": "^5.17.14"
   },
   "devDependencies": {
-    "@cowtech/eslint-config": "^9.0.3",
-    "@swc/cli": "^0.3.12",
-    "@swc/core": "^1.4.13",
+    "@cowtech/eslint-config": "10.0.0",
+    "@swc-node/register": "^1.10.9",
+    "@swc/cli": "0.4.1-nightly.20240914",
+    "@swc/core": "^1.7.36",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.12.7",
-    "@types/swagger-ui-dist": "^3.30.4",
-    "c8": "^9.1.0",
-    "chokidar": "^3.6.0",
-    "concurrently": "^8.2.2",
-    "eslint": "^8.57.0",
-    "fastify": "^4.26.2",
-    "prettier": "^3.2.5",
-    "tsx": "^4.7.2",
-    "typescript": "^5.4.5"
+    "@types/node": "^22.7.7",
+    "@types/swagger-ui-dist": "^3.30.5",
+    "c8": "^10.1.2",
+    "chokidar": "^4.0.1",
+    "concurrently": "^9.0.1",
+    "eslint": "^9.13.0",
+    "fastify": "^5.0.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
   },
   "engines": {
-    "node": ">= 18.18.0"
+    "node": ">= 20.18.0"
   }
 }

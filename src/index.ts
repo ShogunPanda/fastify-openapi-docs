@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import {
   type FastifyError,
   type FastifyInstance,
@@ -8,7 +7,7 @@ import {
   type RouteOptions
 } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
-import yaml from 'js-yaml'
+import { dump } from 'js-yaml'
 import { buildSpec, type Schema } from './spec.js'
 import { addUI } from './ui.js'
 
@@ -32,7 +31,7 @@ export const plugin = fastifyPlugin(
       url: `${prefix}/openapi.yaml`,
       handler(_: FastifyRequest, reply: FastifyReply): void {
         reply.type('text/yaml')
-        reply.send(yaml.dump(spec))
+        reply.send(dump(spec))
       },
       config: { hide: false }
     })
@@ -63,7 +62,7 @@ export const plugin = fastifyPlugin(
 
     done()
   },
-  { name: 'fastify-openapi-docs', fastify: '4.x' }
+  { name: 'fastify-openapi-docs', fastify: '5.x' }
 )
 
 export default plugin

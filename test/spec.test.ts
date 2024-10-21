@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-
 import fastify, { type FastifyReply, type FastifyRequest } from 'fastify'
 import { deepStrictEqual } from 'node:assert'
 import { test } from 'node:test'
