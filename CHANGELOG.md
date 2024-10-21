@@ -1,3 +1,7 @@
+### 2024-10-21 / 4.0.0
+
+- feat!: Dropped support for Node 18 and updated dependencies.
+
 ### 2024-07-17 / 3.1.0
 
 - feat: Merge pull request #12 from fedorov-xyz/feat/operation-id
