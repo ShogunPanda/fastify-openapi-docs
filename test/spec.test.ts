@@ -1,7 +1,7 @@
 import fastify, { type FastifyReply, type FastifyRequest } from 'fastify'
 import { deepStrictEqual } from 'node:assert'
 import { test } from 'node:test'
-import { plugin as fastifyOpenApiDocs } from '../src/index.js'
+import { plugin as fastifyOpenApiDocs } from '../src/index.ts'
 
 const openapi = {
   // All these fields are optional, but they should be provided to satisfy OpenAPI specification.

@@ -29,41 +29,35 @@
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "swc --strip-leading-paths --delete-dir-on-start -s -w -d dist src",
-    "build": "swc --strip-leading-paths --delete-dir-on-start -d dist src",
-    "postbuild": "concurrently npm:lint npm:typecheck",
+    "build": "rm -rf dist && tsc -p tsconfig.json && npm run lint",
     "format": "prettier -w src test",
     "lint": "eslint --cache",
-    "typecheck": "tsc -p . --emitDeclarationOnly",
-    "test": "c8 -c test/config/c8-local.json node --env-file=test.env --test test/*.test.ts",
-    "test:ci": "c8 -c test/config/c8-ci.json node --env-file=test.env --test-reporter=tap --test test/*.test.ts",
-    "ci": "npm run build && npm run test:ci",
+    "test": "c8 -c test/config/c8-local.json node --test --test-reporter=cleaner-spec-reporter test/*.test.ts",
+    "test:ci": "c8 -c test/config/c8-ci.json node --test --test-reporter=tap test/*.test.ts",
+    "ci": "npm run build && npm run test",
     "prepublishOnly": "npm run ci",
     "postpublish": "git push origin && git push origin -f --tags"
   },
   "dependencies": {
-    "@fastify/static": "^8.0.3",
-    "fastify-plugin": "^5.0.1",
-    "js-yaml": "^4.1.0",
-    "swagger-ui-dist": "^5.18.2"
+    "@fastify/static": "^8.3.0",
+    "fastify-plugin": "^5.1.0",
+    "js-yaml": "^4.1.1",
+    "swagger-ui-dist": "^5.30.2"
   },
   "devDependencies": {
-    "@cowtech/eslint-config": "10.2.0",
-    "@swc-node/register": "^1.10.9",
-    "@swc/cli": "0.5.2",
-    "@swc/core": "^1.10.3",
+    "@cowtech/eslint-config": "^11.0.0",
+    "@cowtech/typescript-config": "^0.2.2",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^22.10.2",
-    "@types/swagger-ui-dist": "^3.30.5",
+    "@types/node": "^24.10.1",
+    "@types/swagger-ui-dist": "^3.30.6",
     "c8": "^10.1.3",
-    "chokidar": "^4.0.3",
-    "concurrently": "^9.1.1",
-    "eslint": "^9.17.0",
-    "fastify": "^5.2.0",
-    "prettier": "^3.4.2",
-    "typescript": "^5.7.2"
+    "cleaner-spec-reporter": "^0.5.0",
+    "eslint": "^9.39.1",
+    "fastify": "^5.6.2",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3"
   },
   "engines": {
-    "node": ">= 20.18.0"
+    "node": ">= 22.21.0"
   }
 }

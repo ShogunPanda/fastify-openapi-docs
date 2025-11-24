@@ -1,7 +1,7 @@
 import fastify from 'fastify'
 import { deepStrictEqual, ok } from 'node:assert'
 import { test } from 'node:test'
-import { plugin as fastifyOpenApiDocs } from '../src/index.js'
+import { plugin as fastifyOpenApiDocs } from '../src/index.ts'
 
 test('UI serving', async () => {
   await test('should serve the UI by default', async () => {
