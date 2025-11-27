@@ -1,3 +1,7 @@
+### 2025-11-27 / 5.0.1
+
+- fix: Correctly sort type only imports.
+
 ### 2025-11-24 / 5.0.0
 
 - chore: Updated dependencies.
