@@ -1,4 +1,4 @@
-import { type FastifyInstance, type FastifySchema, type RouteOptions } from 'fastify'
+import type { FastifyInstance, FastifySchema, RouteOptions } from 'fastify'
 
 type RouteConfig = Record<string, any>
 

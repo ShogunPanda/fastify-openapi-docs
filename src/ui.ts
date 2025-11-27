@@ -1,7 +1,7 @@
-import fastifyStatic from '@fastify/static'
-import { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fastify'
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import fastifyStatic from '@fastify/static'
 import { getAbsoluteFSPath } from 'swagger-ui-dist'
 
 export function addUI(instance: FastifyInstance, prefix: string): void {

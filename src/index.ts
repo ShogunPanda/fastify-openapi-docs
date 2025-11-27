@@ -1,14 +1,15 @@
-import {
-  type FastifyError,
-  type FastifyInstance,
-  type FastifyPluginOptions,
-  type FastifyReply,
-  type FastifyRequest,
-  type RouteOptions
+import type {
+  FastifyError,
+  FastifyInstance,
+  FastifyPluginOptions,
+  FastifyReply,
+  FastifyRequest,
+  RouteOptions
 } from 'fastify'
+import type { Schema } from './spec.ts'
 import fastifyPlugin from 'fastify-plugin'
 import { dump } from 'js-yaml'
-import { buildSpec, type Schema } from './spec.ts'
+import { buildSpec } from './spec.ts'
 import { addUI } from './ui.ts'
 
 export const plugin = fastifyPlugin(

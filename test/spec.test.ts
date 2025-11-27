@@ -1,6 +1,7 @@
-import fastify, { type FastifyReply, type FastifyRequest } from 'fastify'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 import { deepStrictEqual } from 'node:assert'
 import { test } from 'node:test'
+import fastify from 'fastify'
 import { plugin as fastifyOpenApiDocs } from '../src/index.ts'
 
 const openapi = {

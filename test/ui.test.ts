@@ -1,6 +1,6 @@
-import fastify from 'fastify'
 import { deepStrictEqual, ok } from 'node:assert'
 import { test } from 'node:test'
+import fastify from 'fastify'
 import { plugin as fastifyOpenApiDocs } from '../src/index.ts'
 
 test('UI serving', async () => {
