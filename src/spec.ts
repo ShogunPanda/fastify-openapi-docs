@@ -76,7 +76,7 @@ function parseResponses(responses: Response): Schema {
 
   // For each response code
   for (const [code, originalResponse] of Object.entries(responses)) {
-    const { description, $raw, $empty } = originalResponse as Record<string, string>
+    const { description, $raw, $empty, ...schema } = originalResponse as Schema
     const spec: Schema = { description }
 
     // Special handling for raw responses
@@ -86,7 +86,7 @@ function parseResponses(responses: Response): Schema {
       // Regular response
       spec.content = {
         'application/json': {
-          schema: originalResponse
+          schema
         }
       }
     }

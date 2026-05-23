@@ -680,6 +680,90 @@ paths:
     })
   })
 
+  await test('should not emit response metadata in schema', async () => {
+    const server = fastify()
+
+    await server.register(fastifyOpenApiDocs, {})
+
+    server.route({
+      method: 'GET',
+      url: '/path',
+      schema: {
+        response: {
+          200: {
+            type: 'string',
+            description: 'OK'
+          },
+          201: {
+            type: 'number',
+            $empty: false
+          }
+        }
+      },
+      handler(_: FastifyRequest, reply: FastifyReply): void {
+        reply.send('ok')
+      }
+    })
+
+    const { body: jsonSpec } = await server.inject('/docs/openapi.json')
+
+    deepStrictEqual(JSON.parse(jsonSpec), {
+      components: {
+        schemas: {}
+      },
+      paths: {
+        '/path': {
+          get: {
+            responses: {
+              200: {
+                description: 'OK',
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'string'
+                    }
+                  }
+                }
+              },
+              201: {
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'number'
+                    }
+                  }
+                }
+              }
+            }
+          },
+          head: {
+            responses: {
+              200: {
+                description: 'OK',
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'string'
+                    }
+                  }
+                }
+              },
+              201: {
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'number'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+  })
+
   await test('should replace multiple types with anyOf', async () => {
     const server = fastify()
 
