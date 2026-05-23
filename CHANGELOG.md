@@ -1,3 +1,7 @@
+### 2026-05-23 / 5.0.2
+
+- fix: Do not leak description in schemas.
+
 ### 2025-11-27 / 5.0.1
 
 - fix: Correctly sort type only imports.
