@@ -1,3 +1,7 @@
+### 2026-05-23 / 6.0.0
+
+- fix: Do not leak description in schemas.
+
 ### 2026-05-23 / 5.0.2
 
 - fix: Do not leak description in schemas.
